@@ -59,3 +59,8 @@ cast_list = df_wip.explode('casting')['casting']
 
 # Suppression des colonnes explosées du DataFrame principal
 df_wip = df_wip[['type','title','director','date_added','release_year','rating','duration (movies)','seasons (TV Shows)','description']]
+
+# Création de colonnes Année, Mois et Jour de la semaine
+df_wip['Année'] = df_wip['date_added'].dt.year
+df_wip['Mois'] = df_wip['date_added'].dt.month
+df_wip['Jour de la semaine'] = df_wip['date_added'].dt.day_of_week

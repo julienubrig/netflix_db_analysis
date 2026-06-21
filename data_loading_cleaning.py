@@ -42,30 +42,35 @@ def clean_df(df_wip):
     # Suppression de la colonne 'duration'
     df_wip = df_wip[['type','title','director','cast','country','date_added','release_year','rating','duration (movies)','seasons (TV Shows)','listed_in','description']]
 
-
-    # Création de DataFrames 
-
-    # Séparation des pays pour les lignes contenant plusieurs pays
-    df_wip['countries'] = df_wip['country'].str.split(',').to_list()
-    # Création d'un DataFrame avec une ligne par pays
-    countries_exploded = df_wip.explode('countries')['countries']
-
-    # Séparation des catégories pour les lignes contenant plusieurs catégories
-    df_wip['categories'] = df_wip['listed_in'].str.split(',').to_list()
-    # Création d'un DataFrame avec une ligne par catégorie
-    categories_exploded = df_wip.explode('categories')['categories']
-
-    # Séparation des acteurs
-    df_wip['casting'] = df_wip['cast'].str.split(',').to_list()
-    # Création d'un DataFrame avec une ligne par acteur
-    cast_list = df_wip.explode('casting')['casting']
-
     # Suppression des colonnes explosées du DataFrame principal
     df_wip = df_wip[['type','title','director','date_added','release_year','rating','duration (movies)','seasons (TV Shows)','description']]
 
     # Création de colonnes Année, Mois et Jour de la semaine
-    df_wip['Année'] = df_wip['date_added'].dt.year
-    df_wip['Mois'] = df_wip['date_added'].dt.month
-    df_wip['Jour de la semaine'] = df_wip['date_added'].dt.day_of_week
+    df_wip['Année'] = df_wip['date_added'].dt.year.astype('Int64')
+    df_wip['Mois'] = df_wip['date_added'].dt.month.astype('Int64')
+    df_wip['Jour de la semaine'] = df_wip['date_added'].dt.day_name()
 
-    return df_wip, countries_exploded, categories_exploded, cast_list
+    return df_wip
+
+# Création de DataFrames
+def countries_df(df_wip):
+    # Séparation des pays pour les lignes contenant plusieurs pays
+    df_wip['countries'] = df_wip['country'].str.split(',').to_list()
+    # Création d'un DataFrame avec une ligne par pays
+    countries_exploded = df_wip.explode('countries')[['countries']]
+    countries_exploded.name = 'countries'
+    return countries_exploded
+
+def categories_df(df_wip):
+    # Séparation des catégories pour les lignes contenant plusieurs catégories
+    df_wip['categories'] = df_wip['listed_in'].str.split(',').to_list()
+    # Création d'un DataFrame avec une ligne par catégorie
+    categories_exploded = df_wip.explode('categories')[['categories']]
+    return categories_exploded
+
+def casting_df(df_wip):
+    # Séparation des acteurs
+    df_wip['casting'] = df_wip['cast'].str.split(',').to_list()
+    # Création d'un DataFrame avec une ligne par acteur
+    cast_list = df_wip.explode('casting')[['casting']]
+    return cast_list

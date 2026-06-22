@@ -13,8 +13,8 @@ casting_df = data_loading_cleaning.casting_df(df)
 # Analyse des données
 
 # 1) Compter le nombre de séries
-nb_series = data_analysis.count_tv_shows(cleaned_df)
-print(f"Nombre de séries dans le Dataset : {nb_series}")
+nb_shows = data_analysis.count_shows(cleaned_df)
+print(f"Nombre de shows dans le Dataset : {nb_shows}")
 print()
 
 # 2) Déterminer la répartition Films/Séries
@@ -36,8 +36,8 @@ for category, count in top5_series.items():
     print(f"{category} : {count}")
 print()
 
-# 5) Top 5 des comédiens les plus plébiscités
-top5_acteurs = data_analysis.top5_acteurs(casting_df)
+# 5) Top 5 des comédiens les plus plébiscités aux Etats-Unis
+top5_acteurs = data_analysis.top5_acteurs(casting_df, countries_df)
 print("Top 5 des acteurs :")
 for acteur, count in top5_acteurs.items():
     print(f"{acteur} apparaît dans {count} films et/ou séries")

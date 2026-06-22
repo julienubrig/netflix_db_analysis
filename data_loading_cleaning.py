@@ -33,7 +33,7 @@ def clean_df(df_wip):
     # print(df_wip['type'].value_counts())
 
     # Vérification du format de la colonne 'duration' en fonction du 'type'
-    # print(df_wip.groupby('type')['duration'].apply(list))
+    # print(df_wip.groupby(['type','duration'])['duration'].count())
 
     # Création d'une colonne indiquant la durée en minute des films 
     df_wip['duration (movies)'] = df_wip.loc[df_wip['type'] == 'Movie', 'duration'].str.split(' ').str[0].astype(float)

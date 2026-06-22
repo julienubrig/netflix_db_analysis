@@ -1,9 +1,9 @@
 import pandas as pd
 
 # Détermination du nombre de séries
-def count_tv_shows(df):
-    nb_tv_shows = len(df[df['type'] == 'TV Show'])
-    return nb_tv_shows
+def count_shows(df):
+    nb_shows = len(df)
+    return nb_shows
 
 
 # Détermination de la répartition films/séries
@@ -27,15 +27,16 @@ def top5_series(df):
     return categories_count
 
 
-# Détermination du top 5 des comédiens les plus plébiscités
-def top5_acteurs(df):
-    df_wip = df.copy()
+# Détermination du top 5 des comédiens les plus plébiscités aux Etats-Unis
+def top5_acteurs(df_casting, df_countries):
+    df_wip = pd.merge(df_casting, df_countries, on='show_id')
+    df_wip = df_wip[df_wip['countries'] == 'United States']
     df_wip['casting'] = df_wip['casting'].str.strip()
     casting_count = df_wip['casting'].value_counts().head(5)
     return casting_count
 
 
-# Détermination de la réparition des jours d'ajouts
+# Détermination de la répartition des jours d'ajouts
 def repartition_jours_semaine(df):
     return df['Jour de la semaine'].value_counts()
 

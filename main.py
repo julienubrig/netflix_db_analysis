@@ -44,10 +44,35 @@ for acteur, count in top5_acteurs.items():
 print()
 
 # Répartition des ajouts selon le jour de la semaine
-# print(cleaned_df)
 repartition_ajouts_jours_semaine = data_analysis.repartition_jours_semaine(cleaned_df)
 print("Répartition des ajouts par jour de la semaine :")
 for day, count in repartition_ajouts_jours_semaine.items():
     pourc_ajout = round(count / len(cleaned_df) * 100, 2)
     print(f"{day} : {pourc_ajout} % des ajouts")
 print()
+
+
+# Pays dans lesquels sont produits le plus de documentaires
+top5_pays_documentaires = data_analysis.top5_pays_documentaires(categories_df, countries_df)
+print("Top 5 des pays où sont produits les documentaires :")
+for country, count in top5_pays_documentaires.items():
+    print(f"{country} : {count}")
+print()
+
+
+# Nombre moyen de saisons par série
+df_moy_saisons_series = data_analysis.moy_saisons(cleaned_df)
+print(f"Nombre moyen de saisons par série : {df_moy_saisons_series}")
+print()
+
+
+# Distribution des films
+distri_films = data_analysis.distri_films(cleaned_df)
+print("Distribution des films par durée :")
+print(distri_films)
+print()
+
+
+# Nombre de série avec thématique drogue
+series_drogue = data_analysis.series_drogue(cleaned_df)
+print(f"Nombre de séries ayant la drogue en thématique : {series_drogue}")

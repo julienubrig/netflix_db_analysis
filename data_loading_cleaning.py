@@ -53,24 +53,29 @@ def clean_df(df_wip):
     return df_wip
 
 # Création de DataFrames
-def countries_df(df_wip):
+def countries_df(df):
+    df_wip = df.copy()
     # Séparation des pays pour les lignes contenant plusieurs pays
-    df_wip['countries'] = df_wip['country'].str.split(',').to_list()
+    df_wip['countries'] = df_wip['country'].str.split(',')
     # Création d'un DataFrame avec une ligne par pays
-    countries_exploded = df_wip.explode('countries')[['countries']]
-    countries_exploded.name = 'countries'
+    countries_exploded = df_wip.explode('countries')[['show_id','countries']]
+    countries_exploded['countries'] = countries_exploded['countries'].str.strip()
     return countries_exploded
 
-def categories_df(df_wip):
+def categories_df(df):
+    df_wip = df.copy()
     # Séparation des catégories pour les lignes contenant plusieurs catégories
-    df_wip['categories'] = df_wip['listed_in'].str.split(',').to_list()
+    df_wip['categories'] = df_wip['listed_in'].str.split(',')
     # Création d'un DataFrame avec une ligne par catégorie
-    categories_exploded = df_wip.explode('categories')[['categories']]
+    categories_exploded = df_wip.explode('categories')[['show_id','categories']]
+    categories_exploded['categories'] = categories_exploded['categories'].str.strip()
     return categories_exploded
 
-def casting_df(df_wip):
+def casting_df(df):
+    df_wip = df.copy()
     # Séparation des acteurs
-    df_wip['casting'] = df_wip['cast'].str.split(',').to_list()
+    df_wip['casting'] = df_wip['cast'].str.split(',')
     # Création d'un DataFrame avec une ligne par acteur
-    cast_list = df_wip.explode('casting')[['casting']]
-    return cast_list
+    casting_exploded = df_wip.explode('casting')[['show_id','casting']]
+    casting_exploded['casting'] = casting_exploded['casting'].str.strip()
+    return casting_exploded
